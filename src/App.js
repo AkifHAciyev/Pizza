@@ -10,7 +10,7 @@ function App() {
 	return (
 		<div className="wrapper">
 			<Header />
-			<div class="content">
+			<div className="content">
 				<div className="container">
 					<div className="content__top">
 						<Categorias />
@@ -19,7 +19,7 @@ function App() {
 					<h2 className="content__title">Все пиццы</h2>
 					<div className="content__items">
 						{pizzas.map((obj) => (
-							<PizzaBlock {...obj} />
+							<PizzaBlock key={obj.id} {...obj} />
 						))}
 					</div>
 				</div>
