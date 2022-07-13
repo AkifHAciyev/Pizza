@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import Categorias from '../components/Categorias';
 import Sort from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
@@ -22,18 +23,18 @@ const Home = () => {
 		dispatch(setCategoryId(id));
 	};
 
-	const search = searchValue ? `&search=${searchValue}` : '';
-
 	useEffect(() => {
 		setIsLoading(true);
-		fetch(
-			`https://62b42b95530b26da4cb800c7.mockapi.io/items?page=${currentPage}&limit=4${
-				categoryId > 0 ? `category=${categoryId}` : ''
-			}&sortBy=${sort.sortProperty}&order=desc${search}`
-		)
-			.then((res) => res.json())
-			.then((arr) => {
-				setItems(arr);
+
+		const search = searchValue ? `&search=${searchValue}` : '';
+		const category = categoryId > 0 ? `category=${categoryId}` : '';
+
+		axios
+			.get(
+				`https://62b42b95530b26da4cb800c7.mockapi.io/items?page=${currentPage}&limit=4${category}&sortBy=${sort.sortProperty}&order=desc${search}`
+			)
+			.then((res) => {
+				setItems(res.data);
 				setIsLoading(false);
 			});
 		window.scrollTo(0, 0);
